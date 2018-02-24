@@ -13,6 +13,7 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   private interval: number;
   private msgSubscription: Subscription;
   public messages: Message[] = [];
+  protected msgTypes: string[] = ['text', 'image'];
 
   constructor(private message: MessageService) {
     this.interval = 1000 * 3; // 3 seconds
@@ -33,7 +34,9 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   }
 
   protected getMessage() {
-    this.message.getMessage().subscribe((msg: Message) => {
+    const msgType = this.msgTypes[Math.floor(Math.random() * this.msgTypes.length)];
+
+    this.message.getMessage(msgType).subscribe((msg: Message) => {
       if (msg) {
         this.messages.push(msg);
       }

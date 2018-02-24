@@ -9,7 +9,11 @@ export class MessageService {
   constructor(private http: HttpClient) {
   }
 
-  public getMessage(): Observable<Message> {
-    return this.http.get<Message>('assets/api/message.json');
+  public getMessage(type?: string): Observable<Message> {
+    if (!type) {
+      type = 'text';
+    }
+
+    return this.http.get<Message>(`assets/api/message-${type}.json`);
   }
 }
