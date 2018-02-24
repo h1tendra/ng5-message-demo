@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Message} from './message';
+import {config} from '../app.config';
 
 @Injectable()
 export class MessageService {
@@ -14,7 +15,7 @@ export class MessageService {
       type = 'text';
     }
 
-    return this.http.get<Message>(`assets/api/message-${type}.json`);
+    return this.http.get<Message>(`${config.API_ENDPOINT}/message-${type}.json`);
   }
 
   public isMsgExpired(msg: Message): boolean {

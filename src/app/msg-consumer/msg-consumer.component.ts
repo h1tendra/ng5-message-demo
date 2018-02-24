@@ -3,6 +3,7 @@ import {MessageService} from '../shared/message.service';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {Subscription} from 'rxjs/Subscription';
 import {Message} from '../shared/message';
+import {config} from '../app.config';
 
 @Component({
   selector: 'app-msg-consumer',
@@ -16,7 +17,7 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   protected msgTypes: string[] = ['text', 'image'];
 
   constructor(private messageService: MessageService) {
-    this.interval = 1000 * 3; // 3 seconds
+    this.interval = config.POLLING_INTERVAL;
   }
 
   ngOnInit() {
