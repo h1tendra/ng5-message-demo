@@ -8,13 +8,15 @@ import {config} from '../app.config';
 @Component({
   selector: 'app-msg-consumer',
   templateUrl: './msg-consumer.component.html',
-  styleUrls: ['./msg-consumer.component.css']
+  styleUrls: ['./msg-consumer.component.scss']
 })
 export class MsgConsumerComponent implements OnInit, OnDestroy {
+  private audio = new Audio(`${config.API_ENDPOINT}/message.wav`); // load audio to play
   private interval: number;
   private msgSubscription: Subscription;
   public messages: Message[] = [];
   protected msgTypes: string[] = ['text', 'image'];
+  public loadInProgress = true;
 
   constructor(private messageService: MessageService) {
     this.interval = config.POLLING_INTERVAL;
@@ -45,6 +47,7 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
     const msgType = this.msgTypes[Math.floor(Math.random() * this.msgTypes.length)];
 
     this.messageService.getMessage(msgType).subscribe((msg: Message) => {
+      this.loadInProgress = false;
       if (msg) {
         if (config.OVERRIDE_SERVER_EXPIRE_TIME) { // for demo purpose (modify config file to disable)
           const now = new Date();
@@ -53,8 +56,11 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
         // add message into collection if it's not expired
         if (!this.messageService.isMsgExpired(msg)) {
           this.messages.push(msg);
+          this.audio.play();
         }
       }
+    }, err => {
+      this.loadInProgress = false;
     });
   }
 

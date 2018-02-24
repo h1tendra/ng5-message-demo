@@ -4,7 +4,7 @@ import {Message} from '../../shared/message';
 @Component({
   selector: 'app-msg-presenter',
   templateUrl: './msg-presenter.component.html',
-  styleUrls: ['./msg-presenter.component.css']
+  styleUrls: ['./msg-presenter.component.scss']
 })
 export class MsgPresenterComponent implements OnInit {
   @Input() message: Message;

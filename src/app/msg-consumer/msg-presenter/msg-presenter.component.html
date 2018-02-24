@@ -1,11 +1,7 @@
-<div class="message" *ngIf="display">
-  <div class="message-header">#ID : {{ message.id }}</div>
-  <div class="message-text" *ngIf="message.type === 'text'">
-    <p>{{ message.message }}</p>
+  <img *ngIf="message.type === 'image'" class="card-img-top" [src]="message.message" alt="Can't load Image">
+  <div class="card-body" *ngIf="message.type !== 'image'">
+    <p class="card-text" *ngIf="message.type === 'text'">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div>
-  <div class="message-image" *ngIf="message.type === 'image'">
-    <img width="200" [src]="message.message" alt="Can't load Image"/>
+  <div class="card-footer">
+      <small>Expires At : {{ message.expires_at | date:'medium' }}</small>
   </div>
-  <div class="message-expire-time">Message Expires At : <b>{{ message.expires_at | date:'medium' }}</b></div>
-  <div class="clear"></div>
-</div>

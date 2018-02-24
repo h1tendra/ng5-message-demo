@@ -1,10 +1,15 @@
-<div class="message-list">
-  <app-msg-presenter *ngFor="let message of messages; let i = index;" [message]="message" [id]="i"
-                     (msgExpired)="onMsgExpire($event)"></app-msg-presenter>
-  <div class="no-records" *ngIf="messages.length === 0">
-    <p>No message(s) found :( Please change expire_at(Message Expiration Time) field to future date time in</p>
-    <p><a href="assets/api/message-image.json" target="_blank">message-image.json</a> &
-      <a href="assets/api/message-text.json" target="_blank">message-text.json</a> to see results.
-    </p>
-  </div>
+<div class="container">
+    <div class="row">
+		<div class="col-6"></div>
+		<div class="col-6">
+            <app-msg-presenter class="card mb-3 bg-primary text-white animated slideInUp" *ngFor="let message of messages; let i = index;" [message]="message" [id]="i" (msgExpired)="onMsgExpire($event)"></app-msg-presenter>
+        </div>
+    </div>
+    <div class="alert alert-warning" *ngIf="loadInProgress == false && messages.length === 0">
+        <p>No message(s) found :( Please change expire_at(Message Expiration Time) field to future date time in</p>
+        <p><a href="assets/api/message-image.json" target="_blank">message-image.json</a> &
+            <a href="assets/api/message-text.json" target="_blank">message-text.json</a> to see results.
+        </p>
+    </div>
+
 </div>
