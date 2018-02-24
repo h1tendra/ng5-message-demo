@@ -15,7 +15,7 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   public messages: Message[] = [];
   protected msgTypes: string[] = ['text', 'image'];
 
-  constructor(private message: MessageService) {
+  constructor(private messageService: MessageService) {
     this.interval = 1000 * 3; // 3 seconds
   }
 
@@ -36,9 +36,11 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   protected getMessage() {
     const msgType = this.msgTypes[Math.floor(Math.random() * this.msgTypes.length)];
 
-    this.message.getMessage(msgType).subscribe((msg: Message) => {
+    this.messageService.getMessage(msgType).subscribe((msg: Message) => {
       if (msg) {
-        this.messages.push(msg);
+        if (!this.messageService.isMsgExpired(msg)) {
+          this.messages.push(msg);
+        }
       }
     });
   }

@@ -16,4 +16,12 @@ export class MessageService {
 
     return this.http.get<Message>(`assets/api/message-${type}.json`);
   }
+
+  public isMsgExpired(msg: Message): boolean {
+    const expireDate = new Date(msg.expires_at);
+    const now = new Date();
+    const expiresInSecs = expireDate.getTime() - now.getTime();
+
+    return expiresInSecs <= 0;
+  }
 }
