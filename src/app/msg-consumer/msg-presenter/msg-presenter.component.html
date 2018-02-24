@@ -6,6 +6,6 @@
   <div class="message-image" *ngIf="message.type === 'image'">
     <img width="200" [src]="message.message" alt="Can't load Image"/>
   </div>
-  <div class="message-expire-time">Message Expires At : <b>{{ message.expires_at | date:'short' }}</b></div>
+  <div class="message-expire-time">Message Expires At : <b>{{ message.expires_at | date:'medium' }}</b></div>
   <div class="clear"></div>
 </div>

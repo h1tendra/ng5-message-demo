@@ -39,6 +39,11 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
 
     this.messageService.getMessage(msgType).subscribe((msg: Message) => {
       if (msg) {
+        if (config.OVERRIDE_SERVER_EXPIRE_TIME) { // for demo purpose
+          const now = new Date();
+          msg.expires_at = (new Date(now.getTime() + 1000 * 60)).toISOString();
+          console.log('OVERRIDE_SERVER_EXPIRE_TIME is active, change value to `false` in app.config.ts file to disable!', msg.expires_at);
+        }
         if (!this.messageService.isMsgExpired(msg)) {
           this.messages.push(msg);
         }
