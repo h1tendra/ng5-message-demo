@@ -4,6 +4,12 @@
   border-bottom: 1px solid grey;
 }
 
+.message-header {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: darkred;
+}
+
 .message-text {
   font-weight: bold;
   color: grey;
