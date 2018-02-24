@@ -25,6 +25,7 @@ export class MsgPresenterComponent implements OnInit {
     const now = new Date();
     const expiresInSecs = expireDate.getTime() - now.getTime();
 
+    // logic to notify parent about message expiration
     if (expiresInSecs > 0) {
       this.display = true;
       setTimeout(() => {

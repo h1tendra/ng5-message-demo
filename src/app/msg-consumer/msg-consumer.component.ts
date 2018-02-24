@@ -18,6 +18,10 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
 
   constructor(private messageService: MessageService) {
     this.interval = config.POLLING_INTERVAL;
+
+    if (config.OVERRIDE_SERVER_EXPIRE_TIME) {
+      console.log('OVERRIDE_SERVER_EXPIRE_TIME is active, change value to `false` in app.config.ts file to disable!');
+    }
   }
 
   ngOnInit() {
@@ -25,25 +29,28 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // stop polling if component gets destroyed
     this.msgSubscription.unsubscribe();
   }
 
   protected startMsgPolling() {
+    // create timer for message polling
     this.msgSubscription = TimerObservable.create(0, this.interval).subscribe(() => {
       this.getMessage();
     });
   }
 
   protected getMessage() {
+    // generate random message type
     const msgType = this.msgTypes[Math.floor(Math.random() * this.msgTypes.length)];
 
     this.messageService.getMessage(msgType).subscribe((msg: Message) => {
       if (msg) {
-        if (config.OVERRIDE_SERVER_EXPIRE_TIME) { // for demo purpose
+        if (config.OVERRIDE_SERVER_EXPIRE_TIME) { // for demo purpose (modify config file to disable)
           const now = new Date();
-          msg.expires_at = (new Date(now.getTime() + 1000 * 60)).toISOString();
-          console.log('OVERRIDE_SERVER_EXPIRE_TIME is active, change value to `false` in app.config.ts file to disable!', msg.expires_at);
+          msg.expires_at = (new Date(now.getTime() + 1000 * 30)).toISOString();
         }
+        // add message into collection if it's not expired
         if (!this.messageService.isMsgExpired(msg)) {
           this.messages.push(msg);
         }
@@ -52,6 +59,7 @@ export class MsgConsumerComponent implements OnInit, OnDestroy {
   }
 
   protected onMsgExpire(id: number) {
+    // removes message from list by index
     this.messages.splice(id, 1);
   }
 
