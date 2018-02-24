@@ -1,3 +1,2 @@
-<p>
-  msg-consumer works!
-</p>
+<app-msg-presenter *ngFor="let message of messages; let i = index;" [message]="message" [id]="i"
+                   (msgExpired)="onMsgExpire($event)"></app-msg-presenter>

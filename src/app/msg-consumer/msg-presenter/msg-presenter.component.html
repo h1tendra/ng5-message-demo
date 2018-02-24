@@ -1,0 +1,7 @@
+<div *ngIf="display">
+  <p *ngIf="message.type === 'text'">{{ message.message }}</p>
+  <div *ngIf="message.type === 'image'">
+    <img [src]="message.message" alt="Can't load Image"/>
+  </div>
+  <div>{{ message.expires_at | date:'short' }}</div>
+</div>
