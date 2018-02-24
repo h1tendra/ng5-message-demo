@@ -1,0 +1,10 @@
+.message-list {
+  padding: 5px;
+}
+
+.no-records {
+  text-align: center;
+  padding: 5px;
+  background-color: grey;
+  color: black;
+}

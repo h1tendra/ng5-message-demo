@@ -1,0 +1,24 @@
+.message {
+  padding: 5px;
+  background-color: bisque;
+  border-bottom: 1px solid grey;
+}
+
+.message-text {
+  font-weight: bold;
+  color: grey;
+}
+
+.message-image {
+  padding: 2px;
+}
+
+.message-expire-time {
+  float: right;
+  color: chocolate;
+  padding: 2px;
+}
+
+.clear {
+  clear: both;
+}
